@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Польська граматика A1–B1</title>
+<meta name="description" content="Інтерактивна мапа польської граматики до рівня B1 для україномовних: системні правила, паралелі з українською, приклади, пастки, самоперевірка і промпти для LLM.">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <button id="btnOutline" class="icon-btn" title="Зміст (O)" aria-label="Зміст">☰</button>
+  <div class="brand" title="На початок">
+    <span class="logo">PL</span>
+    <div><b>Польська граматика A1–B1</b><small>системна мапа для україномовних</small></div>
+  </div>
+  <div class="search">
+    <input id="q" type="search" placeholder="Пошук: тема, слово, закінчення…   ( / )" autocomplete="off" spellcheck="false" aria-label="Пошук">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <div class="levels" role="group" aria-label="Рівень: приглушити теми вище">
+    <button data-lv="A1" title="Приглушити теми A2 і B1">A1</button>
+    <button data-lv="A2" title="Приглушити теми B1">A2</button>
+    <button data-lv="B1" title="Показати все">B1</button>
+  </div>
+  <div id="progress" class="progress" title="Вивчені теми (зберігаються в цьому браузері)"></div>
+  <button id="btnTheme" class="icon-btn" title="Світла / темна тема" aria-label="Тема оформлення">◐</button>
+  <button id="btnHelp" class="icon-btn" title="Довідка (?)" aria-label="Довідка">?</button>
+</header>
+
+<main id="app" class="app">
+  <aside id="outline" class="outline" aria-label="Зміст">
+    <div class="outline-head"><span>Зміст</span><span id="outlineCount"></span></div>
+    <nav id="tree"></nav>
+  </aside>
+
+  <section id="map" class="map" tabindex="0" aria-label="Мапа граматики">
+    <div id="world"><svg id="edges" aria-hidden="true"></svg><div id="nodes"></div></div>
+    <div class="map-bar map-bar-left"><nav id="mapCrumbs" class="map-crumbs"></nav></div>
+    <div class="map-bar map-bar-right">
+      <button id="zoomOut" title="Зменшити (−)" aria-label="Зменшити">−</button>
+      <button id="zoomIn" title="Збільшити (+)" aria-label="Збільшити">+</button>
+      <button id="fit" title="Вмістити мапу в екран (F)" aria-label="Вмістити">⤢</button>
+      <button id="expandAll" title="Розгорнути вибрану гілку повністю" aria-label="Розгорнути">⊞</button>
+      <button id="collapseAll" title="Згорнути все" aria-label="Згорнути">⊟</button>
+      <button id="autoCollapse" title="Авто-згортання: відкрита лише гілка поточної теми" aria-label="Авто-згортання" aria-pressed="true">⇲</button>
+    </div>
+    <div class="map-hint">Тягни — рух · Ctrl + колесо — масштаб · клік — тема · «+N» — розгорнути</div>
+  </section>
+
+  <div id="resizer" class="resizer" title="Потягни, щоб змінити ширину панелі"></div>
+  <section id="detail" class="detail" aria-live="polite"></section>
+</main>
+
+<div id="toast" class="toast" role="status" hidden></div>
+
+<div id="help" class="modal" hidden>
+  <div class="modal-card" role="dialog" aria-label="Довідка">
+    <button class="icon-btn close" aria-label="Закрити">✕</button>
+    <h2>Як користуватися мапою</h2>
+    <p>Мапа — це вся граматика польської до рівня B1, розкладена по гілках: фонетика, відмінки, частини мови, синтаксис, словотвір. Клацни тему, щоб відкрити її праворуч; клацни ще раз або на «+N», щоб розгорнути чи згорнути підтеми. Кнопка 🎯 показує на мапі лише одну гілку.</p>
+    <table>
+      <tr><td><b>Позначки в тексті</b></td><td><b>польське</b> — жирним, <i style="color:var(--ua-ink)">українське</i> — курсивом, <mark>закінчення / чергування</mark> — маркером, <s style="color:var(--warn)">помилка</s> — закреслено</td></tr>
+      <tr><td><b>✅ / ⚠️</b></td><td>✅ — так само, як в українській; ⚠️ — відрізняється від української</td></tr>
+      <tr><td><b>A1 · A2 · B1</b></td><td>рівень, на якому тема з’являється. Перемикач угорі приглушує теми вищого рівня.</td></tr>
+      <tr><td><b>🤖 Копіювати для LLM</b></td><td>копіює готовий промпт: хто ти (носій української, системний підхід), як відповідати, конспект теми і твоє запитання. Кнопка 🤖 біля прикладу чи завдання копіює запит саме про нього.</td></tr>
+      <tr><td><b>💬 Приклади</b></td><td>«сховати переклад» / «сховати польське» — режим тренування; 🔊 — прослухати польською (якщо в системі є польський голос)</td></tr>
+      <tr><td><b>Прогрес</b></td><td>«○ Вивчено?» позначає тему; позначки зберігаються лише в цьому браузері</td></tr>
+    </table>
+    <h2 style="margin-top:18px">Клавіші</h2>
+    <table>
+      <tr><td><kbd>/</kbd></td><td>пошук (можна без діакритики: <i>zolw</i> → <b>żółw</b>)</td></tr>
+      <tr><td><kbd>N</kbd> / <kbd>P</kbd></td><td>наступна / попередня тема за порядком вивчення</td></tr>
+      <tr><td><kbd>1</kbd>…<kbd>7</kbd></td><td>вкладки теми</td></tr>
+      <tr><td><kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd></td><td>рух мапою (коли мапа у фокусі): батьківська / перша підтема / сусідні теми</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>розгорнути / згорнути тему на мапі</td></tr>
+      <tr><td><kbd>C</kbd></td><td>скопіювати контекст теми для LLM</td></tr>
+      <tr><td><kbd>L</kbd></td><td>позначити тему як вивчену</td></tr>
+      <tr><td><kbd>F</kbd> · <kbd>+</kbd> · <kbd>−</kbd></td><td>вмістити мапу · масштаб</td></tr>
+      <tr><td><kbd>O</kbd></td><td>показати / сховати зміст</td></tr>
+    </table>
+  </div>
+</div>
+
+<script src="content/00-root.js"></script>
+<script src="content/01-phonetics.js"></script>
+<script src="content/02-cases.js"></script>
+<script src="content/03-nouns.js"></script>
+<script src="content/04-pronouns.js"></script>
+<script src="content/05-adj-adv.js"></script>
+<script src="content/06-numerals.js"></script>
+<script src="content/07-verb-forms.js"></script>
+<script src="content/08-verb-aspect.js"></script>
+<script src="content/09-prep-wf.js"></script>
+<script src="content/10-syntax.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

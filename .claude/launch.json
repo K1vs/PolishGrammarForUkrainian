@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mindmap",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["src/tools/serve.js", "8765"],
+      "port": 8765
+    }
+  ]
+}
