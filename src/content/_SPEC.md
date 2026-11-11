@@ -149,6 +149,9 @@ Ukrainian sentence when there is a parallel. Do not bold the whole Polish senten
   miejscownik/місцевий, wołacz/кличний. In prose use full Ukrainian names (родовий відмінок) or short «Р.», «З.», «Ms./М.».
 - Gender labels: ч. / ж. / с.; plural: **ос.-чол.** (męskoosobowy) and **неос.-чол.** (niemęskoosobowy).
 - Show Ukrainian parallels as: **dom==u==** — *дом==у==*; **rę==ce==** — *ру==ці==*.
+- Sound approximations in Cyrillic: **ś, ź, ć, dź** (also **si, zi, ci, dzi**) = *шь, жь, чь, джь* — never *сь, зь, ць, дзь*
+  (those are UA dental sounds, not the Polish ones); **ń** = *нь*. No extra remarks that *шь* is soft — the reader knows ь.
+  This is about sound only; etymological correspondences (*сіно* — **siano**, *тінь* — **cień**) stay as they are.
 - Use ✅ for "same as in Ukrainian", ⚠️ for "differs", ❌ / ✅ in traps.
 - Mark sub-points above the node's level inline: «(B1)».
 - Cross-link generously: every node should link to the related nodes (inside and outside your branch).
@@ -232,7 +235,7 @@ it helps the learner. (✅ = matches Ukrainian, ⚠️ = differs.)
   before a vowel (**ś**/si, **ć**/ci, **ź**/zi, **dź**/dzi, **ń**/ni); i alone = vowel + softness (**ciocia**); pairs s/ś/sz,
   z/ź/ż, c/ć/cz (**kasza** vs **Kasia**; **sześć**); soft labials pi/bi/mi/wi (**pies**, **biały**, **miasto**, **wiara**);
   UA parallels: *ті/ді/ть/дь* ↔ ci/dzi/ć/dź (*тихо* **cicho**, *діти* **dzieci**, *день* **dzień**, *тінь* **cień**);
-  pronunciation advice for UA speakers (ś is softer than *сь*, closer to *щ*-like hiss; cz/sz are hard like UA ч/ш).
+  pronunciation advice for UA speakers (ś ź ć dź ≈ *шь жь чь джь*, not UA dental *сь зь ць дзь*; cz/sz are hard like UA ч/ш).
 - **ph-nasal** «Носові ą, ę», A1 — pronunciation rules: before p/b → om/em (**ząb** [zomp], **gęba**), before t/d → on/en
   (**kąt**, **będę**), before k/g → [oŋ]/[eŋ] (**ręka**), before ć/dź → oń/eń (**pięć**), before ł/l → no nasality (**wziął**,
   **wzięli**), before fricatives → nasal vowel (**wąs**, **gęś**, **wąż**), word-final ę ≈ [e] (**idę**, **proszę**), final ą
